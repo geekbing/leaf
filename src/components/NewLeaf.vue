@@ -126,7 +126,13 @@
         this.form.inputTag = ''
       },
       handleCancle () {
-        this.$router.push('leaf')
+        this.$confirm('确定不保存吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$router.push('leaf')
+        }).catch(() => {})
       },
       uploadSuccess (response, file, fileList) {
         this.dialogTableVisible = false
