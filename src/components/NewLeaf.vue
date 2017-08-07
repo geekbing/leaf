@@ -47,36 +47,26 @@
       }
     },
     mounted () {
-      let _this = this
+      let vm = this
       this.simplemde.codemirror.on('drop', function (editor, e) {
+        console.log('editor from drop')
+        console.log(editor)
         let fileList = e.dataTransfer.files
         if (fileList.length > 1) {
-          _this.$message.error('一次只能上传一张图片')
+          vm.$message.error('一次只能上传一张图片')
           return false
         }
         if (fileList[0].type.indexOf('image') === -1) {
-          _this.$message.error('只能上传图片！')
+          vm.$message.error('只能上传图片！')
           return false
         }
-
-        // placeholder
         let placeholder = '![Uploading ' + fileList[0]['name'] + '...]()'
         editor.replaceRange(placeholder, {
           line: editor.getCursor().line,
           ch: editor.getCursor().ch
         })
-
-        let img = new FormData()
-        img.append('img', fileList[0])
-
-        editor.setValue(editor.getValue().replace(placeholder, '![](qqq)'))
-//        axios.post('/images/upload', img).then((res) => {
-//          if (res.data['status'] == 'success') {
-//            editor.setValue(editor.getValue().replace(tips, '![](' + res.data['uri'] + ')'))
-//          } else {
-//            _this.$message.error(res.data['message'])
-//          }
-//        })
+        // Todo upload image
+        editor.setValue(editor.getValue().replace(placeholder, '![](https://goss1.vcg.com/creative/vcg/800/version23/VCG41108137880.jpg)'))
       })
     },
     data () {
@@ -92,8 +82,8 @@
         dialogTableVisible: false,
         configs: {
           tabSize: 4,
-          status: false,                        // 禁用底部状态栏
-          initialValue: '// 开始愉快的Coding',    // 设置初始值
+          status: false,                          // 禁用底部状态栏
+          initialValue: '// 开始愉快的Coding吧',    // 设置初始值
           toolbar: ['bold', 'italic', 'heading', '|', 'quote', 'unordered-list', 'ordered-list', '|', 'link', {
             name: 'custom',
             action: this.customFunction,
@@ -101,16 +91,15 @@
             title: '自定义按钮'
           }, 'table', '|', 'preview', 'side-by-side', 'fullscreen', '|', 'code', 'guide'],
           renderingConfig: {
-            codeSyntaxHighlighting: true,       // 开启代码高亮
-            highlightingTheme: 'atom-one-light' // 自定义代码高亮主题，可选列表(https://github.com/isagalaev/highlight.js/tree/master/src/styles)
+            codeSyntaxHighlighting: true,        // 开启代码高亮
+            highlightingTheme: 'atom-one-light'   // 自定义代码高亮主题
           }
         }
       }
     },
     methods: {
       customFunction (editor) {
-//        this.dialogTableVisible = true
-        // placeholder
+        this.dialogTableVisible = true
       },
       handleSave () {
         this.loading = true
@@ -139,25 +128,22 @@
       handleCancle () {
         this.$router.push('leaf')
       },
-      uploadSuccess (err, file, fileList) {
-        console.log(err)
-      },
-      uploadError (event, file, fileList) {
+      uploadSuccess (response, file, fileList) {
         this.dialogTableVisible = false
-
-        let editor = this.simplemde
-        let placeholder = '![Uploading...]()'
+        let editor = this.simplemde.codemirror
+        let placeholder = '![](http://pic41.nipic.com/20140529/18243620_101015342117_2.gif)'
         editor.replaceRange(placeholder, {
           line: editor.getCursor().line,
           ch: editor.getCursor().ch
         })
-//        this.dialogTableVisible = false
-//        console.log('上传错误')
-//        console.log(this.$refs.markdownEditor)
-//        console.log(this.$refs.markdownEditor.simplemde)
-//        console.log(this.simplemde)
-//        console.log(this.simplemde.codemirror)
-//        this.simplemde.value('error')
+      },
+      uploadError (err, file, fileList) {
+        console.log(err)
+        this.dialogTableVisible = false
+        this.$notify.error({
+          title: '错误',
+          message: '上传失败，请稍后重试。'
+        })
       }
     }
   }
@@ -170,7 +156,11 @@
   }
 
   .new-form {
-    padding: 20px;
+    padding: 20px 40px 20px 20px;
+  }
+
+  .mini-tag:first-child {
+    margin-left: 0;
   }
 
   .mini-tag {

@@ -59,4 +59,8 @@
   .el-upload-dragger:hover {
     border-width: 2px;
   }
+
+  .markdown-editor .CodeMirror {
+    height: 400px;
+  }
 </style>
