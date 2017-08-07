@@ -63,4 +63,17 @@
   .markdown-editor .CodeMirror {
     height: 400px;
   }
+
+  .setting-container .avatar-uploader .el-upload {
+    border: 1px solid #efefef;
+    box-shadow: 0 0 5px #dedede;
+    border-radius: 90px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .setting-container .avatar-uploader .el-upload:hover {
+    box-shadow: 0 0 15px #bcbcbc;
+  }
 </style>
