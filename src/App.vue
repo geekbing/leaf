@@ -74,6 +74,6 @@
   }
 
   .setting-container .avatar-uploader .el-upload:hover {
-    box-shadow: 0 0 15px #bcbcbc;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .12);
   }
 </style>

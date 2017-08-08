@@ -1,32 +1,56 @@
 <template>
   <div class="setting-container">
-    <el-row :gutter="40">
-      <el-col :span="12">
-        <el-form :model="formData" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="姓名" prop="chineseName">
-            <el-input v-model="formData.chineseName"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="formData.email"></el-input>
-          </el-form-item>
-          <el-form-item label="博客" prop="blogUrl">
-            <el-input v-model="formData.blogUrl"></el-input>
-          </el-form-item>
-          <el-form-item label="简介" prop="intro">
-            <el-input type="textarea" :autosize="{minRows: 3, maxRows: 3}" v-model="formData.intro"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button class="update-btn" type="primary" @click="updateInfo('ruleForm')">更 新</el-button>
-          </el-form-item>
-        </el-form>
+    <el-row :gutter="30">
+      <el-col :span="8">
+        <el-card class="box-card box-card-info" v-loading.body="infoForm.loading" element-loading-text="更新中...">
+          <el-form :model="infoForm" :rules="infoFormRules" ref="infoForm" label-width="100px" class="infoForm">
+            <el-form-item label="姓名" prop="chineseName" label-width="50px">
+              <el-input v-model="infoForm.chineseName"></el-input>
+            </el-form-item>
+            <el-form-item label="博客" prop="blogUrl" label-width="50px">
+              <el-input v-model="infoForm.blogUrl"></el-input>
+            </el-form-item>
+            <el-form-item label="简介" prop="intro" label-width="50px">
+              <el-input v-model="infoForm.intro" type="textarea" :autosize="{minRows: 3, maxRows: 3}"></el-input>
+            </el-form-item>
+            <el-form-item label-width="50px">
+              <el-button class="info-update-btn" type="primary" @click="updateInfo('infoForm')">更 新
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
-                   :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-          <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <el-button>上传新头像</el-button>
+      <el-col :span="8">
+        <el-card class="box-card box-card-email" v-loading.body="emailForm.loading" element-loading-text="更新中...">
+          <el-form :model="emailForm" :rules="emailFormRules" ref="emailForm" label-width="100px" class="emailForm">
+            <el-form-item label="旧邮箱" prop="oldEmail" label-width="60px">
+              <el-input v-model="emailForm.oldEmail"></el-input>
+            </el-form-item>
+            <el-form-item label="验证码" prop="verificationCode" label-width="60px">
+              <el-input v-model="emailForm.verificationCode"></el-input>
+            </el-form-item>
+            <el-form-item label="新邮箱" prop="newEmail" label-width="60px">
+              <el-input v-model="emailForm.newEmail"></el-input>
+            </el-form-item>
+            <el-form-item label-width="60px">
+              <el-button class="email-update-btn" type="primary" :loading="emailForm.loading"
+                         @click="updateEmail('emailForm')">
+                更 新
+              </el-button>
+            </el-form-item>
+          </el-form>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card class="box-card box-card-avatar">
+          <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/"
+                     :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <div slot="tip" class="el-upload__tip el-upload_tip_first">1. 点击头像来上传新头像，只能上传jpg/png图片</div>
+            <div slot="tip" class="el-upload__tip">2. 图片尺寸180 x 180，图片大小不超过500kb </div>
+          </el-upload>
+        </el-card>
       </el-col>
     </el-row>
   </div>
@@ -37,28 +61,42 @@
     name: 'setting',
     data () {
       return {
-        formData: {
+        infoForm: {
+          loading: false,
           chineseName: '郑彬彬',
           email: 'dhuzbb@gmail.com',
           blogUrl: 'http://geekbing.com/',
           intro: 'I make website and apps. I love it!'
         },
-        imageUrl: '',
-        rules: {
+        infoFormRules: {
           chineseName: [
-            {required: true, message: '请输入活动名称', trigger: 'blur'},
-            {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+            {min: 1, max: 10, message: '不超过 10 个字符', trigger: 'blur'}
           ],
           email: [
-            {required: true, message: '请选择活动区域', trigger: 'change'}
+            {type: 'email', message: '请输入正确的邮箱', trigger: 'blur,change'}
           ],
           blogUrl: [
-            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+            {min: 1, max: 100, message: '最大 100 个字符', trigger: 'blur'}
           ],
           intro: [
-            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+            {min: 1, max: 100, message: '最大 100 个字符', trigger: 'blur'}
           ]
-        }
+        },
+        emailForm: {
+          loading: false,
+          oldEmail: 'dhuzbb@gmail.com',
+          verificationCode: '',
+          newEmail: ''
+        },
+        emailFormRules: {
+          oldEmail: [
+            {type: 'email', message: '请输入正确的邮箱', trigger: 'blur,change'}
+          ],
+          newEmail: [
+            {type: 'email', message: '请输入正确的邮箱', trigger: 'blur,change'}
+          ]
+        },
+        imageUrl: ''
       }
     },
     methods: {
@@ -68,7 +106,6 @@
       beforeAvatarUpload (file) {
         const isJPG = file.type === 'image/jpeg'
         const isLt2M = file.size / 1024 / 1024 < 2
-
         if (!isJPG) {
           this.$message.error('上传头像图片只能是 JPG 格式!')
         }
@@ -80,9 +117,29 @@
       updateInfo (formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!')
+            this.infoForm.loading = true
+            // TODO 更新个人信息
+            setTimeout(() => {
+              this.infoForm.loading = false
+              this.$message.success('更新个人信息成功')
+            }, 1000)
           } else {
-            console.log('error submit!!')
+            this.$message.error('请根据提示修改正确后再提交')
+            return false
+          }
+        })
+      },
+      updateEmail (formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.emailForm.loading = true
+            // TODO 更新邮箱
+            setTimeout(() => {
+              this.emailForm.loading = false
+              this.$message.success('更新邮箱成功')
+            }, 1000)
+          } else {
+            this.$message.error('请根据提示修改正确后再提交')
             return false
           }
         })
@@ -93,10 +150,28 @@
 
 <style scoped>
   .setting-container {
-    width: 100%;
-    height: 100%;
-    padding: 40px;
+    margin: 30px;
     text-align: center;
+  }
+
+  .box-card {
+    box-shadow: none;
+  }
+
+  .box-card:hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .12), 0 0 6px 0 rgba(0, 0, 0, .04);
+  }
+
+  .infoForm {
+    margin-top: 10px;
+  }
+
+  .emailForm {
+    margin-top: 30px;
+  }
+
+  .avatar-uploader {
+    margin-top: 10px;
   }
 
   .avatar-uploader-icon {
@@ -114,7 +189,41 @@
     display: block;
   }
 
-  .update-btn {
+  .info-update-btn, .email-update-btn {
     width: 100%;
+  }
+
+  .email-update-btn {
+    margin-top: 20px;
+  }
+
+  .el-card.box-card {
+    padding: 0;
+    height: 310px;
+  }
+
+  .box-card-info {
+    width: 100%;
+    text-align: center;
+    padding: 20px 20px 0 0;
+  }
+
+  .box-card-email {
+    width: 100%;
+    text-align: center;
+    padding: 20px 20px 0 0;
+  }
+
+  .box-card-avatar {
+    width: 100%;
+  }
+
+  .el-upload_tip_first {
+    padding-top: 15px;
+  }
+
+  .el-upload__tip {
+    text-align: left;
+    margin: 10px auto auto 10px;
   }
 </style>
