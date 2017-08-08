@@ -11,7 +11,7 @@
               <el-input v-model="infoForm.blogUrl"></el-input>
             </el-form-item>
             <el-form-item label="简介" prop="intro" label-width="50px">
-              <el-input v-model="infoForm.intro" type="textarea" :autosize="{minRows: 3, maxRows: 3}"></el-input>
+              <el-input v-model="infoForm.intro" type="textarea" :rows="3" resize="none"></el-input>
             </el-form-item>
             <el-form-item label-width="50px">
               <el-button class="info-update-btn" type="primary" @click="updateInfo('infoForm')">更 新
