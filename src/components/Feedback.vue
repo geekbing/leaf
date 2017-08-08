@@ -3,15 +3,17 @@
     <el-card class="box-card">
       <el-form class="feedback-form" ref="form" :model="form" label-width="80px">
         <el-form-item label="问题类型">
-          <el-select v-model="form.region" placeholder="请选择分类">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+          <el-select class="type-select" v-model="form.type" placeholder="请选择分类">
+            <el-option label="功能Bug" value="1"></el-option>
+            <el-option label="功能优化" value="2"></el-option>
+            <el-option label="界面美化" value="3"></el-option>
+            <el-option label="建议新功能" value="4"></el-option>
+            <el-option label="使用帮助" value="5"></el-option>
+            <el-option label="其它问题" value="6"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="详情描述">
-          <el-input type="textarea" v-model="form.desc" placeholder="请输入遇到的问题或建议"></el-input>
+          <el-input type="textarea" v-model="form.desc" :rows="3" placeholder="请输入遇到的问题或建议" resize="none"></el-input>
         </el-form-item>
         <el-form-item label="图片说明">
           <el-upload action="https://jsonplaceholder.typicode.com/posts/" list-type="picture-card"
@@ -54,7 +56,7 @@
         // TODO 提交反馈信息
         setTimeout(() => {
           this.form.loading = false
-          this.$message.success('提交成功')
+          this.$message.success('提交成功，感谢您的宝贵意见。')
         }, 1000)
       },
       handleRemove (file, fileList) {
@@ -80,7 +82,6 @@
     margin-left: auto;
     margin-right: auto;
     box-shadow: none;
-    /*padding-top: 50px;*/
     margin-top: 50px;
   }
 
@@ -91,6 +92,10 @@
   .feedback-form {
     width: 400px;
     margin: auto;
+  }
+
+  .type-select {
+    width: 100%;
   }
 
   .submit-btn {
