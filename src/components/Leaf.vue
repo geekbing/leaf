@@ -24,100 +24,50 @@
     </div>
     <div class="content-container">
       <el-row :gutter="40">
-        <el-col :span="12">
+        <el-col :span="12" v-for="(leaf, index) in leafs" :key="index">
           <div class="one-leaf">
             <el-row>
-              <el-col :span="12"><p class="leaf-title">Java 红黑树解析</p></el-col>
-              <el-col :span="12"><p class="leaf-time">2017-06-07</p></el-col>
+              <el-col :span="12"><p class="leaf-title">{{leaf.article.title}}</p></el-col>
+              <el-col :span="12"><p class="leaf-time">{{leaf.article.createTime | timeFormatter}}</p></el-col>
             </el-row>
             <el-row>
-              <el-col><p class="leaf-intro">
-                Leafer是基于Java实现的一个私人笔记管理项目，现在还是处于beta版本，如果有任何的bug或者功能改进方面上的建议，欢迎大家提issues帮我改进。</p></el-col>
+              <el-col>
+                <p class="leaf-intro">{{leaf.article.body}}</p>
+              </el-col>
             </el-row>
             <el-row>
               <el-col>
                 <p class="leaf-tags">
-                  <el-tag type="gray">标签二</el-tag>
-                  <el-tag type="primary">标签三</el-tag>
-                  <el-tag type="success">标签四</el-tag>
-                  <el-tag type="warning">标签五</el-tag>
-                  <el-tag type="danger">标签六</el-tag>
+                  <el-tag :type="tagType" class="el-tag-random" v-for="(tag, index) in leaf.tags" :key="index">{{tag}}
+                  </el-tag>
                 </p>
               </el-col>
             </el-row>
           </div>
         </el-col>
-        <el-col :span="12">
-          <div class="one-leaf">
-            <el-row>
-              <el-col :span="12"><p class="leaf-title">Java 红黑树解析</p></el-col>
-              <el-col :span="12"><p class="leaf-time">2017-06-07</p></el-col>
-            </el-row>
-            <el-row>
-              <el-col><p class="leaf-intro">
-                Leafer是基于Java实现的一个私人笔记管理项目，现在还是处于beta版本，如果有任何的bug或者功能改进方面上的建议，欢迎大家提issues帮我改进。</p></el-col>
-            </el-row>
-            <el-row>
-              <el-col>
-                <p class="leaf-tags">
-                  <el-tag type="gray">标签二</el-tag>
-                  <el-tag type="primary">标签三</el-tag>
-                  <el-tag type="success">标签四</el-tag>
-                  <el-tag type="warning">标签五</el-tag>
-                  <el-tag type="danger">标签六</el-tag>
-                </p>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row :gutter="40">
-        <el-col :span="12">
-          <div class="one-leaf">
-            <el-row>
-              <el-col :span="12"><p class="leaf-title">Java 红黑树解析</p></el-col>
-              <el-col :span="12"><p class="leaf-time">2017-06-07</p></el-col>
-            </el-row>
-            <el-row>
-              <el-col><p class="leaf-intro">
-                Leafer是基于Java实现的一个私人笔记管理项目，现在还是处于beta版本，如果有任何的bug或者功能改进方面上的建议，欢迎大家提issues帮我改进。</p></el-col>
-            </el-row>
-            <el-row>
-              <el-col>
-                <p class="leaf-tags">
-                  <el-tag type="gray">标签二</el-tag>
-                  <el-tag type="primary">标签三</el-tag>
-                  <el-tag type="success">标签四</el-tag>
-                  <el-tag type="warning">标签五</el-tag>
-                  <el-tag type="danger">标签六</el-tag>
-                </p>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <div class="one-leaf">
-            <el-row>
-              <el-col :span="12"><p class="leaf-title">Java 红黑树解析</p></el-col>
-              <el-col :span="12"><p class="leaf-time">2017-06-07</p></el-col>
-            </el-row>
-            <el-row>
-              <el-col><p class="leaf-intro">
-                Leafer是基于Java实现的一个私人笔记管理项目，现在还是处于beta版本，如果有任何的bug或者功能改进方面上的建议，欢迎大家提issues帮我改进。</p></el-col>
-            </el-row>
-            <el-row>
-              <el-col>
-                <p class="leaf-tags">
-                  <el-tag type="gray">标签二</el-tag>
-                  <el-tag type="primary">标签三</el-tag>
-                  <el-tag type="success">标签四</el-tag>
-                  <el-tag type="warning">标签五</el-tag>
-                  <el-tag type="danger">标签六</el-tag>
-                </p>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
+        <!--<el-col :span="12">-->
+        <!--<div class="one-leaf">-->
+        <!--<el-row>-->
+        <!--<el-col :span="12"><p class="leaf-title">Java 红黑树解析</p></el-col>-->
+        <!--<el-col :span="12"><p class="leaf-time">2017-06-07</p></el-col>-->
+        <!--</el-row>-->
+        <!--<el-row>-->
+        <!--<el-col><p class="leaf-intro">-->
+        <!--Leafer是基于Java实现的一个私人笔记管理项目，现在还是处于beta版本，如果有任何的bug或者功能改进方面上的建议，欢迎大家提issues帮我改进。</p></el-col>-->
+        <!--</el-row>-->
+        <!--<el-row>-->
+        <!--<el-col>-->
+        <!--<p class="leaf-tags">-->
+        <!--<el-tag type="gray">标签二</el-tag>-->
+        <!--<el-tag type="primary">标签三</el-tag>-->
+        <!--<el-tag type="success">标签四</el-tag>-->
+        <!--<el-tag type="warning">标签五</el-tag>-->
+        <!--<el-tag type="danger">标签六</el-tag>-->
+        <!--</p>-->
+        <!--</el-col>-->
+        <!--</el-row>-->
+        <!--</div>-->
+        <!--</el-col>-->
       </el-row>
     </div>
     <div class="page-container">
@@ -127,6 +77,8 @@
 </template>
 
 <script>
+  import fetch from '../utils/fetch'
+
   export default {
     name: 'leaf',
     created: function () {
@@ -136,6 +88,11 @@
       return {
         pageLoading: false,
         tagLoading: false,
+        leafs: [],
+        pagination: {
+          page: 1,
+          size: 4
+        },
         formData: {
           title: '',
           tags: [],
@@ -171,9 +128,41 @@
         }
       }
     },
+    filters: {
+      timeFormatter (time) {
+        let _date = new Date(time)
+        let year = _date.getFullYear()
+        let month = _date.getMonth() + 1 < 10 ? '0' + (_date.getMonth() + 1) : (_date.getMonth() + 1)
+        let date = _date.getDate() < 10 ? '0' + _date.getDate() : _date.getDate()
+        return year + '-' + month + '-' + date
+      }
+    },
+    computed: {
+      tagType: function () {
+        var types = ['', 'gray', 'primary', 'success', 'warning', 'danger']
+        var index = Math.floor(Math.random() * 5)
+        console.log('index: ' + index)
+        let type = types[index]
+        console.log('type: ' + type)
+        return type
+      }
+    },
     methods: {
       fetchData: function () {
-        this.pageLoading = true
+        let vm = this
+        vm.pageLoading = true
+        fetch({
+          url: '/leafapi/article',
+          method: 'get',
+          params: {
+            'page': vm.pagination.page,
+            'size': vm.pagination.size
+          }
+        }).then(function (response) {
+          if (response.status === 200) {
+            vm.leafs = response.data.data
+          }
+        })
         setTimeout(() => {
           this.pageLoading = false
         }, 1000)
@@ -247,7 +236,7 @@
     margin: 0;
   }
 
-  .leaf-tags {
-
+  .el-tag-random {
+    margin-right: 8px;
   }
 </style>
