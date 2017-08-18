@@ -6,27 +6,27 @@
              src="../assets/avatar.jpg">
         <p class="email" v-if="!isCollapse">dhuzbb@163.com</p>
       </div>
-      <el-menu-item index="new">
+      <el-menu-item index="/new">
         <i class="el-icon-plus"></i>
         <span slot="title">新 增</span>
       </el-menu-item>
-      <el-menu-item index="leaf">
+      <el-menu-item index="/leaf">
         <i class="el-icon-menu"></i>
         <span slot="title">片 段</span>
       </el-menu-item>
-      <el-menu-item index="share">
+      <el-menu-item index="/share">
         <i class="el-icon-share"></i>
         <span slot="title">分 享</span>
       </el-menu-item>
-      <el-menu-item index="setting">
+      <el-menu-item index="/setting">
         <i class="el-icon-setting"></i>
         <span slot="title">设 置</span>
       </el-menu-item>
-      <el-menu-item index="feedback">
+      <el-menu-item index="/feedback">
         <i class="el-icon-information"></i>
         <span slot="title">反 馈</span>
       </el-menu-item>
-      <el-menu-item index="logout">
+      <el-menu-item index="/logout">
         <i class="el-icon-upload2"></i>
         <span slot="title">退 出</span>
       </el-menu-item>
