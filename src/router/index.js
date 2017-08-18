@@ -5,6 +5,7 @@ import Register from '@/components/Register'
 import Index from '@/components/Index'
 import NewLeaf from '@/components/NewLeaf'
 import Leaf from '@/components/Leaf'
+import LeafDetail from '@/components/LeafDetail'
 import Share from '@/components/Share'
 import Setting from '@/components/Setting'
 import Feedback from '@/components/Feedback'
@@ -39,6 +40,10 @@ export default new Router({
       path: '/leaf',
       name: 'Leaf',
       component: Leaf
+    }, {
+      path: '/leaf/:id',
+      name: 'LeafDetail',
+      component: LeafDetail
     }, {
       path: '/share',
       name: 'Share',
