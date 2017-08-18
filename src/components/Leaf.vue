@@ -25,10 +25,10 @@
     <div class="content-container">
       <el-row :gutter="40">
         <el-col :span="12" v-for="(leaf, index) in leafs" :key="index">
-          <div class="one-leaf">
+          <div class="one-leaf" @click="handleClickLeaf(leaf.article.id)">
             <el-row>
               <el-col :span="12"><p class="leaf-title">{{leaf.article.title}}</p></el-col>
-              <el-col :span="12"><p class="leaf-time">{{leaf.article.createTime | timeFormatter}}</p></el-col>
+              <el-col :span="12"><p class="leaf-time">{{leaf.article.createTime | dateFormatter}}</p></el-col>
             </el-row>
             <el-row>
               <el-col>
@@ -38,7 +38,8 @@
             <el-row>
               <el-col>
                 <p class="leaf-tags">
-                  <el-tag :type="tagType" class="el-tag-random" v-for="(tag, index) in leaf.tags" :key="index">{{tag}}
+                  <el-tag :type="index % 2 === 0 ? '' : 'gray'" class="el-tag-random" v-for="(tag, index) in leaf.tags"
+                          :key="index">{{tag}}
                   </el-tag>
                 </p>
               </el-col>
@@ -78,6 +79,7 @@
 
 <script>
   import fetch from '../utils/fetch'
+  import { dateFormatter } from '../utils/util'
 
   export default {
     name: 'leaf',
@@ -129,22 +131,14 @@
       }
     },
     filters: {
-      timeFormatter (time) {
-        let _date = new Date(time)
-        let year = _date.getFullYear()
-        let month = _date.getMonth() + 1 < 10 ? '0' + (_date.getMonth() + 1) : (_date.getMonth() + 1)
-        let date = _date.getDate() < 10 ? '0' + _date.getDate() : _date.getDate()
-        return year + '-' + month + '-' + date
+      dateFormatter (time) {
+        return dateFormatter(time)
       }
     },
     computed: {
       tagType: function () {
-        var types = ['', 'gray', 'primary', 'success', 'warning', 'danger']
-        var index = Math.floor(Math.random() * 5)
-        console.log('index: ' + index)
-        let type = types[index]
-        console.log('type: ' + type)
-        return type
+        let types = ['', 'gray', 'primary', 'success', 'warning', 'danger']
+        return types[Math.floor(Math.random() * 6)]
       }
     },
     methods: {
@@ -174,6 +168,9 @@
       },
       currentChange () {
         this.fetchData()
+      },
+      handleClickLeaf (id) {
+        this.$router.push('/leaf/' + id)
       }
     }
   }
