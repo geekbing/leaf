@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-cloak>
     <router-view></router-view>
   </div>
 </template>
@@ -11,6 +11,10 @@
 </script>
 
 <style>
+  [v-cloak] {
+    display: none !important;
+  }
+
   html, body, #app {
     margin: 0;
     padding: 0;
