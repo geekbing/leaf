@@ -7,10 +7,12 @@ import App from './App.vue'
 import router from './router'
 import '@/assets/iconfont/iconfont'
 import IconSvg from './components/Icon-svg.vue'
+import ColorTag from './components/Color-Tag.vue'
 
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.component('icon-svg', IconSvg)
+Vue.component('color-tag', ColorTag)
 
 /* eslint-disable no-new */
 new Vue({
