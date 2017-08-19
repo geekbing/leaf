@@ -20,4 +20,8 @@
   .color-tag {
     margin-right: 8px;
   }
+
+  .color-tag:hover {
+    cursor: pointer;
+  }
 </style>
