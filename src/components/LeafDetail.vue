@@ -14,9 +14,7 @@
     <el-row>
       <el-col>
         <p class="leaf-tags">
-          <el-tag :type="index % 2 === 0 ? '' : 'gray'" class="el-tag-random" v-for="(tag, index) in tags" :key="index">
-            {{tag}}
-          </el-tag>
+          <color-tag v-for="(tag, index) in tags" :key="index">{{tag}}</color-tag>
         </p>
       </el-col>
     </el-row>
@@ -105,14 +103,6 @@
 
   .leaf-tags {
     text-align: center;
-  }
-
-  .el-tag-random {
-    margin-right: 8px;
-  }
-
-  .el-tag-random:hover {
-    cursor: pointer;
   }
 
   .article-body {

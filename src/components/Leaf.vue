@@ -38,9 +38,7 @@
             <el-row>
               <el-col>
                 <p class="leaf-tags">
-                  <el-tag :type="index % 2 === 0 ? '' : 'gray'" class="el-tag-random" v-for="(tag, index) in leaf.tags"
-                          :key="index">{{tag}}
-                  </el-tag>
+                  <color-tag v-for="(tag, index) in leaf.tags" :key="index">{{tag}}</color-tag>
                 </p>
               </el-col>
             </el-row>
@@ -135,12 +133,6 @@
         return dateFormatter(time)
       }
     },
-    computed: {
-      tagType: function () {
-        let types = ['', 'gray', 'primary', 'success', 'warning', 'danger']
-        return types[Math.floor(Math.random() * 6)]
-      }
-    },
     methods: {
       fetchData: function () {
         let vm = this
@@ -231,9 +223,5 @@
     color: #666;
     line-height: 30px;
     margin: 0;
-  }
-
-  .el-tag-random {
-    margin-right: 8px;
   }
 </style>
