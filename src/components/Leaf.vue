@@ -8,8 +8,7 @@
         <el-form-item class="form-item" label="标 签">
           <el-select v-model="formData.tags" multiple filterable remote placeholder="标 签"
                      :remote-method="queryTags" :loading="tagLoading">
-            <el-option v-for="item in formData.options" :key="item.value" :label="item.label"
-                       :value="item.value"></el-option>
+            <el-option v-for="(item, index) in formData.options" :key="index" :label="item" :value="item"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item class="form-item" label="日 期">
@@ -103,24 +102,24 @@
           shortcuts: [{
             text: '最近一周',
             onClick (picker) {
-              const end = new Date()
-              const start = new Date()
+              let end = new Date()
+              let start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
               picker.$emit('pick', [start, end])
             }
           }, {
             text: '最近一个月',
             onClick (picker) {
-              const end = new Date()
-              const start = new Date()
+              let end = new Date()
+              let start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
               picker.$emit('pick', [start, end])
             }
           }, {
             text: '最近三个月',
             onClick (picker) {
-              const end = new Date()
-              const start = new Date()
+              let end = new Date()
+              let start = new Date()
               start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
               picker.$emit('pick', [start, end])
             }
@@ -137,23 +136,39 @@
       fetchData: function () {
         let vm = this
         vm.pageLoading = true
-        fetch({
-          url: '/leafapi/article',
-          method: 'get',
-          params: {
-            'page': vm.pagination.page,
-            'size': vm.pagination.size
-          }
+        fetch.post('/leafapi/article/search', {
+          title: vm.formData.title,
+          tags: vm.formData.tags,
+          page: vm.pagination.page,
+          size: vm.pagination.size
         }).then(function (response) {
           if (response.status === 200) {
             vm.leafs = response.data.data
+            vm.pageLoading = false
           }
+        }).catch(function (error) {
+          vm.pageLoading = false
+          this.$notify({
+            title: '失败',
+            message: '查询失败，请稍后重试。',
+            type: 'error'
+          })
+          console.log(error)
         })
-        setTimeout(() => {
-          this.pageLoading = false
-        }, 1000)
       },
       queryTags (query) {
+        let vm = this
+        fetch({
+          url: '/leafapi/tag/all',
+          method: 'post',
+          params: {
+            tag: query
+          }
+        }).then(function (response) {
+          if (response.status === 200) {
+            vm.formData.options = response.data.data
+          }
+        })
       },
       handleSearch () {
         this.fetchData()
